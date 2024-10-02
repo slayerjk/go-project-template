@@ -32,10 +32,10 @@ func main() {
 	defer logFile.Close()
 
 	// main code here
-	log.Print("string 1")
-	log.Print("string 2")
 
-	// finish tasks
+	// close logfile and rotate logs
+	logFile.Close()
+
 	if err := rotatefiles.RotateFilesByMtime(*logDir, *logsToKeep); err != nil {
 		log.Fatalf("failed to rotate logs:\n\t%s", err)
 	}
