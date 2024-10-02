@@ -14,7 +14,7 @@ func main() {
 	flag.Parse()
 
 	// logging
-	appName := "myapp"
+	appName := "MYAPP"
 
 	logFile, err := logging.StartLogging(appName, *logDir, 3)
 	if err != nil {

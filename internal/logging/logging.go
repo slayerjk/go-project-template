@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 )
 
 // Start logging via log package; creates log file as <fileName>_<mm.dd.YYYY>.log
@@ -13,8 +14,11 @@ func StartLogging(fileName, logDirPath string, logsToKeep int) (*os.File, error)
 		return nil, fmt.Errorf("failed to create log dir %s:\n\t%v", logDirPath, err)
 	}
 
+	// set current time
+	timeNow := time.Now().Format("02.01.2006")
+
 	// create log file
-	logFilePath := fmt.Sprintf("%s/%s.log", logDirPath, fileName)
+	logFilePath := fmt.Sprintf("%s/%s_%s.log", logDirPath, fileName, timeNow)
 
 	logFile, err := os.OpenFile(logFilePath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
