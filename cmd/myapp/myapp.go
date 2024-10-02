@@ -6,11 +6,19 @@ import (
 
 	// change this path for your project
 	"template/internal/logging"
+	"template/internal/rotatefiles"
+)
+
+// log default path & logs to keep after rotation
+const (
+	defaultLogPath    = "logs"
+	defaultLogsToKeep = 3
 )
 
 func main() {
 	// flags
-	logDir := flag.String("log-dir", "logs", "set custom log dir")
+	logDir := flag.String("log-dir", defaultLogPath, "set custom log dir")
+	logsToKeep := flag.Int("keep-logs", defaultLogsToKeep, "set number of logs to keep after rotation")
 	flag.Parse()
 
 	// logging
@@ -23,8 +31,12 @@ func main() {
 
 	defer logFile.Close()
 
-	// code
+	// main code here
 	log.Print("string 1")
 	log.Print("string 2")
 
+	// finish tasks
+	if err := rotatefiles.RotateFilesByMtime(*logDir, *logsToKeep); err != nil {
+		log.Fatalf("failed to rotate logs:\n\t%s", err)
+	}
 }
