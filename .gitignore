@@ -1,0 +1,12 @@
+# all
+*
+
+# except
+!README.md
+!.gitignore
+
+# main packages
+!cmd/myapp/myapp.go
+
+# internal packages
+!internal/logging/logging.go
