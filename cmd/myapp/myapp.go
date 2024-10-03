@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"log"
+	"time"
 
 	// change this path for your project
 	"template/internal/logging"
@@ -31,7 +32,15 @@ func main() {
 
 	defer logFile.Close()
 
+	// starting programm notification
+	startTime := time.Now()
+	log.Println("Program Started")
+
 	// main code here
+
+	// count & print estimated time
+	endTime := time.Now()
+	log.Printf("Program Done\n\tEstimated time is %f seconds", endTime.Sub(startTime).Seconds())
 
 	// close logfile and rotate logs
 	logFile.Close()
