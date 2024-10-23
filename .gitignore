@@ -10,3 +10,7 @@
 
 # internal packages
 !internal/logging/logging.go
+!internal/mailing/mailing.go
+
+# data
+!mailing_BLANK.json

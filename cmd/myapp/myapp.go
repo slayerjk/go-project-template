@@ -2,11 +2,13 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"time"
 
 	// change this path for your project
 	"template/internal/logging"
+	"template/internal/mailing"
 	"template/internal/rotatefiles"
 )
 
@@ -29,7 +31,6 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to start logging:\n\t%s", err)
 	}
-
 	defer logFile.Close()
 
 	// starting programm notification
@@ -37,6 +38,13 @@ func main() {
 	log.Println("Program Started")
 
 	// main code here
+
+	// mailing example
+	newError := fmt.Errorf("custom error")
+	errM := mailing.SendPlainEmailWoAuth("mailing.json", "error", appName, newError.Error(), startTime)
+	if errM != nil {
+		log.Printf("failed to send email:\n\t%v", errM)
+	}
 
 	// count & print estimated time
 	endTime := time.Now()
