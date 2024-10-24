@@ -13,9 +13,12 @@ import (
 
 // log default path & logs to keep after rotation
 const (
+	appName           = "MYAPP"
 	defaultLogPath    = "logs"
 	defaultLogsToKeep = 3
 )
+
+var startTime = time.Now()
 
 func main() {
 	// flags
@@ -24,8 +27,6 @@ func main() {
 	flag.Parse()
 
 	// logging
-	appName := "MYAPP"
-
 	logFile, err := logging.StartLogging(appName, *logDir, 3)
 	if err != nil {
 		log.Fatalf("failed to start logging:\n\t%s", err)
@@ -33,7 +34,6 @@ func main() {
 	defer logFile.Close()
 
 	// starting programm notification
-	startTime := time.Now()
 	log.Println("Program Started")
 
 	// main code here
