@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-// Start logging via log package; creates log file as <fileName>_<mm.dd.YYYY>.log
+// Start logging via log package; creates log file as '<appName>_<mm.dd.YYYY>.log'
 func StartLogging(fileName, logDirPath string, logsToKeep int) (*os.File, error) {
 	// create log dir
 	if err := os.MkdirAll(logDirPath, os.ModePerm); err != nil {
