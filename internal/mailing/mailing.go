@@ -65,13 +65,13 @@ func SendPlainEmailWoAuth(dataFile, msgType, appName string, msg []byte, curDate
 	default:
 		return fmt.Errorf("wrong msgType: neither 'error' nor 'report'")
 	}
-	// set TO: header - must be coma separated values string
+	// set "TO:"" header - must be comma separated values string
 	toHeader := strings.Join(toAddr, ",")
 
+	// setting message body
 	// Generate a random Message-ID
 	// r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	// messageID := strconv.FormatInt(r.Int63(), 10) + "@" + smtpHost
-
 	message := fmt.Sprintf("From: %s\nTo: %s\nSubject: %s>\n\n%v", fromAddr, toHeader, subject, string(msg))
 
 	// Send the email
@@ -80,63 +80,22 @@ func SendPlainEmailWoAuth(dataFile, msgType, appName string, msg []byte, curDate
 		return fmt.Errorf("error in SendMail func:\n\t%v", errS)
 	}
 
-	/*
-		// sending email for all recepients in list
-		for _, recepient := range toAddr {
-			// Generate a random Message-ID
-			// r := rand.New(rand.NewSource(time.Now().UnixNano()))
-			// messageID := strconv.FormatInt(r.Int63(), 10) + "@" + smtpHost
-
-			message := "From: " + fromAddr + "\n" +
-				"To: " + recepient + "\n" +
-				"Subject: " + subject + ">\n\n" +
-				// "MIME-version: 1.0;\n" +
-				// "Content-Type: text/html; charset=\"UTF-8\";\n" +
-				// "Message-ID: <" + messageID + ">\n\n" +
-				string(msg)
-
-			// making blank auth(no auth)
-			// auth := smtp.PlainAuth("", "", "", smtpHost)
-
-			conn, err := smtp.Dial(smtpHostAndPort)
-			if err != nil {
-				return fmt.Errorf("failed to dial to smtp server:\n\t%v", err)
-			}
-
-			// set sender
-			if err := conn.Mail(fromAddr); err != nil {
-				return fmt.Errorf("failed to set sender:\n\t%v", err)
-			}
-
-			//set recepient
-			if err := conn.Rcpt(recepient); err != nil {
-				return fmt.Errorf("failed to set recepient:\n\t%v", err)
-			}
-
-			// send the email body
-			body, err := conn.Data()
-			if err != nil {
-				return fmt.Errorf("failed to set data:\n\t%v", err)
-			}
-
-			// write msg to body
-			_, err = fmt.Fprint(body, message)
-			if err != nil {
-				return fmt.Errorf("failed to write msg to data:\n\t%v", err)
-			}
-
-			// close the body
-			err = body.Close()
-			if err != nil {
-				return fmt.Errorf("failed to close data:\n\t%v", err)
-			}
-
-			// senc QUIT command and close connection
-			err = conn.Quit()
-			if err != nil {
-				return fmt.Errorf("failed to quit the connection:\n\t%v", err)
-			}
-		}
-	*/
 	return nil
 }
+
+/* // mailing example 'report'(read and send log file)
+report, err := os.ReadFile(logFile.Name())
+if err != nil {
+	log.Fatal(err)
+}
+errM1 := mailing.SendPlainEmailWoAuth("mailing.json", "report", appName, report, startTime)
+if errM1 != nil {
+	log.Printf("failed to send email:\n\t%v", errM1)
+} */
+
+/* // mailing example 'error'(just error text)
+newError := fmt.Errorf("custom error")
+errM2 := mailing.SendPlainEmailWoAuth("mailing.json", "error", appName, []byte(newError.Error()), startTime)
+if errM2 != nil {
+	log.Printf("failed to send email:\n\t%v", errM2)
+} */
