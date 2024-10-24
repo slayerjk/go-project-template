@@ -41,7 +41,7 @@ func readMailingData(dataFile string) (MailData, error) {
 // msgType may be: report/error or anything you like;
 // appName - your app name;
 // subject will be like "appName - msgType"
-func SendPlainEmailWoAuth(dataFile, msgType, appName, msg string, curDate time.Time) error {
+func SendPlainEmailWoAuth(dataFile, msgType, appName string, msg []byte, curDate time.Time) error {
 	// read mailing data
 	mailData, err := readMailingData(dataFile)
 	if err != nil {
@@ -78,7 +78,7 @@ func SendPlainEmailWoAuth(dataFile, msgType, appName, msg string, curDate time.T
 			// "MIME-version: 1.0;\n" +
 			// "Content-Type: text/html; charset=\"UTF-8\";\n" +
 			// "Message-ID: <" + messageID + ">\n\n" +
-			msg
+			string(msg)
 
 		// making blank auth(no auth)
 		// auth := smtp.PlainAuth("", "", "", smtpHost)
