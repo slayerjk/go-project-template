@@ -8,6 +8,7 @@ import (
 	// change this path for your project
 	"template/internal/logging"
 	"template/internal/rotatefiles"
+	// "template/internal/mailing"
 )
 
 // log default path & logs to keep after rotation
