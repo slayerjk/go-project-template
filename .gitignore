@@ -7,7 +7,7 @@
 !go.mod
 
 # main packages
-!cmd/myapp/myapp.go
+!cmd/myapp.go
 
 # internal packages
 !internal/logging/logging.go
