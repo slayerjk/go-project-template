@@ -13,4 +13,4 @@
 !internal/mailing/mailing.go
 
 # data
-!mailing_BLANK.json
+!data/mailing_BLANK.json

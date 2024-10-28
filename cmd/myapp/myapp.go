@@ -16,6 +16,7 @@ const (
 	appName           = "MYAPP"
 	defaultLogPath    = "logs"
 	defaultLogsToKeep = 3
+	// mailingFile       = "data/mailing.json"
 )
 
 var startTime = time.Now()
