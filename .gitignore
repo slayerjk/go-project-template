@@ -4,6 +4,7 @@
 # except
 !README.md
 !.gitignore
+!go.mod
 
 # main packages
 !cmd/myapp/myapp.go
