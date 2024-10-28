@@ -18,22 +18,28 @@ const (
 	appName = "MYAPP"
 )
 
-func main() {
+// get full path of Go executable
+func getExePath() string {
 	// get executable's working dir
 	exe, err := os.Executable()
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	exePath := filepath.Dir(exe)
 
-	// defining default values
-	var (
-		startTime  time.Time = time.Now()
-		LogsPath   string    = exePath + "/logs"
-		LogsToKeep int       = 3
-		// mailingFile       string = exePath + "/data/mailing.json"
-	)
+	return exePath
+}
 
+// defining default values
+var (
+	startTime  time.Time = time.Now()
+	LogsPath   string    = getExePath() + "/logs"
+	LogsToKeep int       = 3
+	// mailingFile       string = getExePath() + "/data/mailing.json"
+)
+
+func main() {
 	// flags
 	logsDir := flag.String("log-dir", LogsPath, "set custom log dir")
 	logsToKeep := flag.Int("keep-logs", LogsToKeep, "set number of logs to keep after rotation")
@@ -58,7 +64,7 @@ func main() {
 	// close logfile and rotate logs
 	logFile.Close()
 
-	if err := rotatefiles.RotateFilesByMtime(*logDir, *logsToKeep); err != nil {
+	if err := rotatefiles.RotateFilesByMtime(*logsDir, *logsToKeep); err != nil {
 		log.Fatalf("failed to rotate logs:\n\t%s", err)
 	}
 }
