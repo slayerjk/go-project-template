@@ -3,13 +3,11 @@ package main
 import (
 	"flag"
 	"log"
-	"os"
-	"path/filepath"
 	"time"
 
 	// change this path for your project
 	"github.com/slayerjk/go-project-template/internal/logging"
-	"github.com/slayerjk/go-project-template/internal/rotatefiles"
+	"github.com/slayerjk/go-project-template/internal/vafswork"
 	// "github.com/slayerjk/go-project-template/internal/mailing"
 )
 
@@ -18,23 +16,10 @@ const (
 	appName = "MYAPP"
 )
 
-// get full path of Go executable
-func getExePath() string {
-	// get executable's working dir
-	exe, err := os.Executable()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	exePath := filepath.Dir(exe)
-
-	return exePath
-}
-
 // defining default values
 var (
 	startTime  time.Time = time.Now()
-	LogsPath   string    = getExePath() + "/logs"
+	LogsPath   string    = vafswork.GetExePath() + "/logs"
 	LogsToKeep int       = 3
 	// mailingFile       string = getExePath() + "/data/mailing.json"
 )
@@ -64,7 +49,7 @@ func main() {
 	// close logfile and rotate logs
 	logFile.Close()
 
-	if err := rotatefiles.RotateFilesByMtime(*logsDir, *logsToKeep); err != nil {
+	if err := vafswork.RotateFilesByMtime(*logsDir, *logsToKeep); err != nil {
 		log.Fatalf("failed to rotate logs:\n\t%s", err)
 	}
 }
