@@ -16,22 +16,21 @@ const (
 	appName = "MYAPP"
 )
 
-// defining default values
-var (
-	startTime  time.Time = time.Now()
-	LogsPath   string    = vafswork.GetExePath() + "/logs"
-	LogsToKeep int       = 3
-	// mailingFile       string = getExePath() + "/data/mailing.json"
-)
-
 func main() {
+	// defining default values
+	var (
+		startTime time.Time = time.Now()
+		LogsPath  string    = vafswork.GetExePath() + "/logs"
+		// mailingFile       string = getExePath() + "/data/mailing.json"
+	)
+
 	// flags
 	logsDir := flag.String("log-dir", LogsPath, "set custom log dir")
-	logsToKeep := flag.Int("keep-logs", LogsToKeep, "set number of logs to keep after rotation")
+	logsToKeep := flag.Int("keep-logs", 7, "set number of logs to keep after rotation")
 	flag.Parse()
 
 	// logging
-	logFile, err := logging.StartLogging(appName, *logsDir, LogsToKeep)
+	logFile, err := logging.StartLogging(appName, *logsDir, *logsToKeep)
 	if err != nil {
 		log.Fatalf("failed to start logging:\n\t%s", err)
 	}
