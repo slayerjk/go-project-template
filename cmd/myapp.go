@@ -16,13 +16,15 @@ func main() {
 	var (
 		appNameDefault string    = "MY-APP"
 		startTime      time.Time = time.Now()
-		LogsPath       string    = vafswork.GetExePath() + "/logs" + "_" + appNameDefault
 		// mailingFile       string = getExePath() + "/data/mailing.json"
 	)
 
 	// flags
 	appName := flag.String("app-name", appNameDefault, "set application name(used for logs name, mailing subject, etc)")
+
+	var LogsPath string = vafswork.GetExePath() + "/logs" + "_" + *appName
 	logsDir := flag.String("log-dir", LogsPath, "set custom log dir")
+
 	logsToKeep := flag.Int("keep-logs", 7, "set number of logs to keep after rotation")
 	flag.Parse()
 
