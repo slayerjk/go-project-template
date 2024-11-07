@@ -11,11 +11,6 @@ import (
 	// "github.com/slayerjk/go-project-template/internal/mailing"
 )
 
-// log default path & logs to keep after rotation
-const (
-	appName = "MYAPP"
-)
-
 func main() {
 	// defining default values
 	var (
@@ -25,19 +20,20 @@ func main() {
 	)
 
 	// flags
+	appName := flag.String("app-name", "MY-APP", "set application name(used for logs name, mailing subject, etc)")
 	logsDir := flag.String("log-dir", LogsPath, "set custom log dir")
 	logsToKeep := flag.Int("keep-logs", 7, "set number of logs to keep after rotation")
 	flag.Parse()
 
 	// logging
-	logFile, err := logging.StartLogging(appName, *logsDir, *logsToKeep)
+	logFile, err := logging.StartLogging(*appName, *logsDir, *logsToKeep)
 	if err != nil {
 		log.Fatalf("failed to start logging:\n\t%s", err)
 	}
 	defer logFile.Close()
 
 	// starting programm notification
-	log.Printf("%s Started", appName)
+	log.Printf("%s Started", *appName)
 
 	// main code here
 
