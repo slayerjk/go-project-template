@@ -11,33 +11,32 @@ import (
 	// "github.com/slayerjk/go-project-template/internal/mailing"
 )
 
+const (
+	appName = "MY-APP"
+)
+
 func main() {
 	// defining default values
 	var (
-		appNameDefault string    = "MY-APP"
-		startTime      time.Time = time.Now()
+		logsPath  string    = vafswork.GetExePath() + "/logs" + "_" + appName
+		startTime time.Time = time.Now()
 		// mailingFile       string = getExePath() + "/data/mailing.json"
 	)
 
 	// flags
-	appName := flag.String("app-name", appNameDefault, "set application name(used for logs name, mailing subject, etc)")
-	flag.Parse()
-
-	var logsPath string = vafswork.GetExePath() + "/logs" + "_" + *appName
 	logsDir := flag.String("log-dir", logsPath, "set custom log dir")
 	logsToKeep := flag.Int("keep-logs", 7, "set number of logs to keep after rotation")
-
 	flag.Parse()
 
 	// logging
-	logFile, err := logging.StartLogging(*appName, *logsDir, *logsToKeep)
+	logFile, err := logging.StartLogging(appName, *logsDir, *logsToKeep)
 	if err != nil {
 		log.Fatalf("failed to start logging:\n\t%s", err)
 	}
 	defer logFile.Close()
 
 	// starting programm notification
-	log.Printf("%s Started", *appName)
+	log.Printf("%s Started", appName)
 
 	// main code here
 
