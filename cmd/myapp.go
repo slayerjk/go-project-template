@@ -21,11 +21,12 @@ func main() {
 
 	// flags
 	appName := flag.String("app-name", appNameDefault, "set application name(used for logs name, mailing subject, etc)")
+	flag.Parse()
 
 	var logsPath string = vafswork.GetExePath() + "/logs" + "_" + *appName
 	logsDir := flag.String("log-dir", logsPath, "set custom log dir")
-
 	logsToKeep := flag.Int("keep-logs", 7, "set number of logs to keep after rotation")
+
 	flag.Parse()
 
 	// logging
