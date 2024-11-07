@@ -14,7 +14,7 @@ import (
 func main() {
 	// defining default values
 	var (
-		appNameDefault string    = "MY-APP1"
+		appNameDefault string    = "MY-APP"
 		startTime      time.Time = time.Now()
 		// mailingFile       string = getExePath() + "/data/mailing.json"
 	)
