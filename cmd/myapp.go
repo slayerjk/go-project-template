@@ -9,6 +9,7 @@ import (
 	"github.com/slayerjk/go-project-template/internal/logging"
 	"github.com/slayerjk/go-project-template/internal/vafswork"
 	// "github.com/slayerjk/go-project-template/internal/mailing"
+	// "github.com/slayerjk/go-project-template/internal/vawebwork"
 )
 
 const (

@@ -20,3 +20,7 @@ Email using builtin "net/smtp" based on appname, message, date and mailing.json(
 
 * Get programm's executable path.
 * Rotate files in dir using va builtin packages based on dirname, number of files to keep(most recent).
+
+<h3>internal/vawebwork</h3>
+
+Create insecure http client
