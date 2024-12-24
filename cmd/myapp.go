@@ -6,10 +6,10 @@ import (
 	"time"
 
 	// change this path for your project
-	"github.com/slayerjk/go-project-template/internal/logging"
-	"github.com/slayerjk/go-project-template/internal/vafswork"
-	// "github.com/slayerjk/go-project-template/internal/mailing"
-	// "github.com/slayerjk/go-project-template/internal/vawebwork"
+	logging "github.com/slayerjk/go-logging"
+	vafswork "github.com/slayerjk/go-vafswork"
+	// mailing "github.com/slayerjk/go-mailing"
+	// vawebwork "github.com/slayerjk/go-vawebwork"
 )
 
 const (

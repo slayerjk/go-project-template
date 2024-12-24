@@ -9,10 +9,5 @@
 # main packages
 !cmd/myapp.go
 
-# internal packages
-!internal/logging/logging.go
-!internal/mailing/mailing.go
-!internal/vafswork/vafswork.go
-
 # data
 !data/mailing_BLANK.json
