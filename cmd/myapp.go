@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"time"
 
@@ -27,6 +28,14 @@ func main() {
 	// flags
 	logsDir := flag.String("log-dir", logsPath, "set custom log dir")
 	logsToKeep := flag.Int("keep-logs", 7, "set number of logs to keep after rotation")
+
+	flag.Usage = func() {
+		fmt.Println("THIS APP IS FOR ...")
+		fmt.Println("Usage: <app> [-opt] ...")
+		fmt.Println("Flags:")
+		flag.PrintDefaults()
+	}
+
 	flag.Parse()
 
 	// logging
