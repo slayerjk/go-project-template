@@ -48,7 +48,6 @@ func main() {
 	dateNow := time.Now().Format("02.01.2006")
 	// create log file
 	logFilePath := fmt.Sprintf("%s/%s_%s.log", *logsDir, appName, dateNow)
-	fmt.Println(logFilePath)
 	// open log file in append mode
 	logFile, err := os.OpenFile(logFilePath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
