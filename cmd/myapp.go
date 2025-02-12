@@ -3,11 +3,12 @@ package main
 import (
 	"flag"
 	"fmt"
-	"log"
+	"log/slog"
+	"os"
 	"time"
 
 	// change this path for your project
-	logging "github.com/slayerjk/go-logging"
+
 	vafswork "github.com/slayerjk/go-vafswork"
 	// mailing "github.com/slayerjk/go-mailing"
 	// vawebwork "github.com/slayerjk/go-vawebwork"
@@ -39,25 +40,39 @@ func main() {
 	flag.Parse()
 
 	// logging
-	logFile, err := logging.StartLogging(appName, *logsDir)
+	// create log dir
+	if err := os.MkdirAll(*logsDir, os.ModePerm); err != nil {
+		fmt.Fprintf(os.Stdout, "failed to create log dir %s:\n\t%v", *logsDir, err)
+	}
+	// set current date
+	dateNow := time.Now().Format("02.01.2006")
+	// create log file
+	logFilePath := fmt.Sprintf("%s/%s_%s.log", *logsDir, appName, dateNow)
+	fmt.Println(logFilePath)
+	// open log file in append mode
+	logFile, err := os.OpenFile(logFilePath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
-		log.Fatalf("failed to start logging:\n\t%s", err)
+		fmt.Fprintf(os.Stdout, "failed to open created log file %s:\n\t%v", logFilePath, err)
 	}
 	defer logFile.Close()
+	// set logger
+	logger := slog.New(slog.NewTextHandler(logFile, nil))
+	// test logger
+	// logger.Info("info test-1", slog.Any("val", "key"))
 
 	// starting programm notification
-	log.Printf("%s Started", appName)
+	logger.Info("Program Started", "app name", appName)
 
 	// main code here
 
 	// count & print estimated time
 	endTime := time.Now()
-	log.Printf("Program Done\n\tEstimated time is %f seconds", endTime.Sub(startTime).Seconds())
+	logger.Info("Program Done", slog.Any("estimated time(sec)", endTime.Sub(startTime).Seconds()))
 
 	// close logfile and rotate logs
 	logFile.Close()
 
 	if err := vafswork.RotateFilesByMtime(*logsDir, *logsToKeep); err != nil {
-		log.Fatalf("failed to rotate logs:\n\t%s", err)
+		fmt.Fprintf(os.Stdout, "failed to rotate logs:\n\t%v", err)
 	}
 }
