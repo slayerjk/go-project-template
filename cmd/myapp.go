@@ -18,20 +18,28 @@ const (
 	appName = "MY-APP"
 )
 
+// for dep injection
+// type application struct {
+// 	logger *slog.Logger
+// }
+
 func main() {
 	// defining default values
 	var (
-		logsPath  string    = vafswork.GetExePath() + "/logs" + "_" + appName
+		workDir   string    = vafswork.GetExePath()
+		logsPath  string    = workDir + "/logs" + "_" + appName
 		startTime time.Time = time.Now()
-		// mailingFile       string = getExePath() + "/data/mailing.json"
+		// mailingFileDefault       string = workDir + "/data/mailing.json"
 	)
 
 	// flags
 	logsDir := flag.String("log-dir", logsPath, "set custom log dir")
 	logsToKeep := flag.Int("keep-logs", 7, "set number of logs to keep after rotation")
+	// mailingFile := flag.String("m-file", mailingFileDefault, "file with mailing settings")
 
 	flag.Usage = func() {
-		fmt.Println("THIS APP IS FOR ...")
+		fmt.Println("APP DESCRIPTION")
+		fmt.Println("Version = x.x.x")
 		fmt.Println("Usage: <app> [-opt] ...")
 		fmt.Println("Flags:")
 		flag.PrintDefaults()
@@ -64,16 +72,23 @@ func main() {
 	// starting programm notification
 	logger.Info("Program Started", "app name", appName)
 
-	// main code here
-
-	// count & print estimated time
-	endTime := time.Now()
-	logger.Info("Program Done", slog.Any("estimated time(sec)", endTime.Sub(startTime).Seconds()))
-
-	// close logfile and rotate logs
-	logFile.Close()
-
+	// rotate logs
+	logger.Info("Log rotation first", "logsDir", *logsDir, "logs to keep", *logsToKeep)
 	if err := vafswork.RotateFilesByMtime(*logsDir, *logsToKeep); err != nil {
 		fmt.Fprintf(os.Stdout, "failed to rotate logs:\n\t%v", err)
 	}
+
+	// setting application struct with dep injection
+	// app := &application{
+	// 	logger: logger,
+	// }
+
+	// main code here
+	//
+	//
+
+	// count & print estimated time
+	logFile.Close()
+	endTime := time.Now()
+	logger.Info("Program Done", slog.Any("estimated time(sec)", endTime.Sub(startTime).Seconds()))
 }
