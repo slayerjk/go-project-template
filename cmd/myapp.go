@@ -26,14 +26,14 @@ const (
 func main() {
 	// defining default values
 	var (
-		workDir   string    = vafswork.GetExePath()
-		logsPath  string    = workDir + "/logs" + "_" + appName
-		startTime time.Time = time.Now()
+		workDir         string    = vafswork.GetExePath()
+		logsPathDefault string    = workDir + "/logs" + "_" + appName
+		startTime       time.Time = time.Now()
 		// mailingFileDefault       string = workDir + "/data/mailing.json"
 	)
 
 	// flags
-	logsDir := flag.String("log-dir", logsPath, "set custom log dir")
+	logsDir := flag.String("log-dir", logsPathDefault, "set custom log dir")
 	logsToKeep := flag.Int("keep-logs", 7, "set number of logs to keep after rotation")
 	// mailingFile := flag.String("m-file", mailingFileDefault, "file with mailing settings")
 
