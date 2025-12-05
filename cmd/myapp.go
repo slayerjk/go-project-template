@@ -88,7 +88,6 @@ func main() {
 	//
 
 	// count & print estimated time
-	logFile.Close()
 	endTime := time.Now()
 	logger.Info("Program Done", slog.Any("estimated time(sec)", endTime.Sub(startTime).Seconds()))
 }
