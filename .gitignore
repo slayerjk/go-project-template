@@ -7,4 +7,4 @@
 !go.mod
 
 # main packages
-!cmd/myapp.go
+!cmd/MYAPP/main.go
