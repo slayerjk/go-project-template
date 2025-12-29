@@ -29,7 +29,6 @@ func main() {
 		workDir         string    = vafswork.GetExePath()
 		logsPathDefault string    = workDir + "/logs" + "_" + appName
 		startTime       time.Time = time.Now()
-		// mailingFileDefault       string = workDir + "/data/mailing.json"
 	)
 
 	// flags

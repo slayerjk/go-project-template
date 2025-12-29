@@ -8,6 +8,3 @@
 
 # main packages
 !cmd/myapp.go
-
-# data
-!data/mailing_BLANK.json
